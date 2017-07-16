@@ -1,0 +1,39 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+       <!-- 启动注解驱动的Spring MVC功能，注册请求url和注解POJO类方法的映射-->
+       <mvc:annotation-driven />
+       <!-- 启动包扫描功能，以便注册带有@Controller、@Service、@repository、@Component等注解的类成为spring的bean -->
+       <context:component-scan base-package="com.market.controller" />
+
+       <!-- spring mvc related -->
+       <!-- JSR-303 support will be detected on classpath and enabled automatically -->
+       <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
+              <mvc:message-converters register-defaults="true">
+                     <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                            <property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>
+                            <property name="features">
+                                   <array>
+                                          <value>WriteNullStringAsEmpty</value>
+                                          <value>WriteMapNullValue</value>
+                                          <value>WriteNullListAsEmpty</value>
+                                          <value>WriteNullNumberAsZero</value>
+                                          <value>SortField</value>
+                                   </array>
+                            </property>
+                     </bean>
+              </mvc:message-converters>
+       </mvc:annotation-driven>
+       <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
+              <property name="mediaTypes">
+                     <value>
+                            json=application/json
+                     </value>
+              </property>
+       </bean>
+
+</beans>
