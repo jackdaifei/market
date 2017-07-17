@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "/virtual")
 public class VirtualCoinMarketController {
 
-    @RequestMapping(value = "/table")
+    @RequestMapping(value = "/index")
     @ResponseBody
-    public JSONObject table() {
+    public JSONObject index() {
 
         return null;
     }
