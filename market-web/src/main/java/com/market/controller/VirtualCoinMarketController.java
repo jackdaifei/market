@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by Administrator on 17-7-17.
  */
 @Controller
-@RequestMapping(value = "/virtual")
+@RequestMapping(value = "/coin")
 public class VirtualCoinMarketController {
 
-    @RequestMapping(value = "/index")
+    @RequestMapping(value = "/info")
     public String index() {
-        return "first_vm";
+        return "coin_info";
     }
 
 }

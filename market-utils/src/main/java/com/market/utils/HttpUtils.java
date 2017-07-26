@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.http.Header;
+import org.apache.http.HttpHost;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -117,4 +118,19 @@ public class HttpUtils {
         return JSONObject.parseObject(responseStr);
     }
 
+    public static JSONObject getWithProxy(String url, String ip, int port) throws Exception {
+        HttpGet httpGet = new HttpGet(url);
+        HttpHost proxy = new HttpHost(ip, port, "http");
+        RequestConfig defaultRequestConfig = RequestConfig.custom()
+                .setSocketTimeout(5000)
+                .setConnectTimeout(5000)
+                .setConnectionRequestTimeout(5000)
+                .setStaleConnectionCheckEnabled(true).setProxy(proxy)
+                .build();
+        CloseableHttpClient client = HttpClients.custom().setDefaultRequestConfig(defaultRequestConfig).build();
+        CloseableHttpResponse response = client.execute(httpGet);
+        String responseStr = EntityUtils.toString(response.getEntity());
+        response.close();
+        return JSONObject.parseObject(responseStr);
+    }
 }
