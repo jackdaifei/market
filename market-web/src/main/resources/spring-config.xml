@@ -8,32 +8,27 @@
        <!-- 启动注解驱动的Spring MVC功能，注册请求url和注解POJO类方法的映射-->
        <mvc:annotation-driven />
        <!-- 启动包扫描功能，以便注册带有@Controller、@Service、@repository、@Component等注解的类成为spring的bean -->
-       <context:component-scan base-package="com.market.controller" />
+       <context:component-scan base-package="com.market" />
 
-       <!-- spring mvc related -->
-       <!-- JSR-303 support will be detected on classpath and enabled automatically -->
-       <mvc:annotation-driven content-negotiation-manager="contentNegotiationManager">
-              <mvc:message-converters register-defaults="true">
-                     <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
-                            <property name="supportedMediaTypes" value="text/html;charset=UTF-8"/>
-                            <property name="features">
-                                   <array>
-                                          <value>WriteNullStringAsEmpty</value>
-                                          <value>WriteMapNullValue</value>
-                                          <value>WriteNullListAsEmpty</value>
-                                          <value>WriteNullNumberAsZero</value>
-                                          <value>SortField</value>
-                                   </array>
-                            </property>
-                     </bean>
-              </mvc:message-converters>
-       </mvc:annotation-driven>
-       <bean id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
-              <property name="mediaTypes">
-                     <value>
-                            json=application/json
-                     </value>
-              </property>
+       <!-- 通过默认servlet访问静态资源  详情：http://www.cnblogs.com/dflmg/p/6393416.html -->
+       <mvc:default-servlet-handler />
+
+       <!-- JSP视图配置 -->
+       <!--
+       <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+              <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+              <property name="prefix" value="/WEB-INF/jsp/"/>
+              <property name="suffix" value=".jsp"/>
+       </bean>
+       -->
+
+       <!-- velocity视图配置 -->
+       <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+              <property name="resourceLoaderPath" value="/WEB-INF/vm/" />
+       </bean>
+
+       <bean class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+              <property name="suffix" value=".vm" />
        </bean>
 
 </beans>
