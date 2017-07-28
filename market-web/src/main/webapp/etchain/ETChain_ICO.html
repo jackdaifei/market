@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)https://ico.etchain.org/ico/icomain.html -->
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="shortcut icon" href="https://www.antshares.org/images/logo-sm.png" media="screen">-->
+    <link rel="shortcut icon" href="https://ico.etchain.org/ico/img/ETChain.ico" media="screen">
+    <title>ETChain ICO</title>
+    <link rel="stylesheet" href="./ETChain_ICO_files/animate.min.css">
+    <link rel="stylesheet" href="./ETChain_ICO_files/swiper.min.css">
+    <link rel="stylesheet" href="./ETChain_ICO_files/font-awesome.css">
+    <link rel="stylesheet" href="./ETChain_ICO_files/Site.css">
+    <link rel="stylesheet" href="./ETChain_ICO_files/bootstrap.css">
+    <!--<link rel="stylesheet" href="css/clock.css" />-->
+    <link rel="stylesheet" href="./ETChain_ICO_files/crowd.css">
+
+    <script src="./ETChain_ICO_files/hm.js"></script>
+    <script type="text/javascript" src="./ETChain_ICO_files/AntSharesSDK.js"></script>
+</head>
+<body>
+<!--[if lt IE 10]>
+您的浏览器已经<strong>过时</strong>。请<a href="http://browsehappy.com/">点击这里</a>升级您的浏览器以改进浏览体验。
+<![endif]-->
+<header>
+    <div class="bg">
+        <div class="bannerPc">
+            <img src="./ETChain_ICO_files/bg02.png">
+        </div>
+        <img class="lazy logo" data-original="img/ETCChainLogo.png" src="./ETChain_ICO_files/ETCChainLogo.png"
+             alt=" ETChain ">
+        <ul style="position: absolute;top: 30px;right: 30px;list-style: none;font-size: 18px;">
+            <li style="float: right;margin-right: 30px;"><a href="http://www.etchain.org/home/media.html"
+                                                            target="_blank" style="color:#FFFFFF;">媒体报道</a></li>
+            <li style="float: right;margin-right: 30px;"><a href="https://ico.etchain.org/ico/howtouse.html"
+                                                            target="_blank" style="color:#FFFFFF;">钱包下载</a></li>
+            <li style="float: right;margin-right: 30px;"><a href="https://ico.etchain.org/ico/icomain.html#"
+                                                            target="_blank" style="color:#FFFFFF;">ICO首页</a></li>
+            <li style="float: right;margin-right: 30px;"><a href="http://www.etchain.org/" target="_blank"
+                                                            style="color:#FFFFFF;">首页</a></li>
+        </ul>
+        <div class="rb hidden-xs">
+            <div class="btn-group" role="group">
+                <!--<a href=" ">-->
+                <!--<img class="lazy" data-original="img/btn/detailBtn.png" src="img/btn/detailBtn.png" height="50px"/>-->
+                <!--</a>-->
+                <a href="https://ico.etchain.org/ico/howtojoin.html" target="_blank">
+                    <img class="lazy" data-original="img/btn/howJoinBtn.png" src="./ETChain_ICO_files/howJoinBtn.png"
+                         height="50px">
+                </a>
+                <a href="https://ico.etchain.org/ico/file/ETChain%EF%BC%88%E6%B3%9B%E5%A8%B1%E9%93%BE%EF%BC%89%E7%99%BD%E7%9A%AE%E4%B9%A6_v1.0.pdf"
+                   download="">
+                    <img class="lazy" data-original="img/btn/baipishuDownload.png"
+                         src="./ETChain_ICO_files/baipishuDownload.png" height="50px">
+                    <!--< img class="lazy" data-original="img/btn/howJoinBtn.png" src="img/btn/howJoinBtn.png" height="50px"/>-->
+                </a>
+                <!--<a class="btn btn-default" href="http://www.etchain.org/index.php">众筹细则</ a>
+                <a class="btn btn-default" href="http://www.etchain.org/index.php">如何参与</ a>-->
+            </div>
+        </div>
+
+        <canvas id="display" width="1870" height="976"></canvas>
+
+        <div class="slogen">
+            <h2 class="phone-h2" style="letter-spacing:2px;font-size: 35px;">ETChain&nbsp;&nbsp;Culture is New
+                Currency</h2>
+
+            <table class="dataInfo_table" width="100%">
+                <tbody>
+                <tr>
+                    <td>
+                        <div>当前官网总额</div>
+                        <div id="cash_value">176.095 BTC</div>
+                    </td>
+                    <td>
+                        <div>当前官网总额</div>
+                        <div id="ethAmount">6160.059 ETH</div>
+                    </td>
+                    <td>
+                        <div>参与人数</div>
+                        <div id="participants">1230 人</div>
+                    </td>
+                    <td id="countdown" style="display: none;">
+                        <div>ICO倒计时</div>
+                        <!--<div>
+                            <span id="countdown_d">0</span>:
+                            <span id="countdown_h">0</span>:
+                            <span id="countdown_m">0</span>:
+                            <span id="countdown_s">0</span>
+                        </div>-->
+                        <div id="tiles"></div>
+
+
+                    </td>
+                    <td id="countdown_text_from_end" style="display: table-cell;">
+                        <!--<span>ICO 已经开始</span>-->
+                        <div>ICO 已经结束</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="button-group" id="joinBtnDiv">
+                <button class="btn let-s-do-it hover" href="javascript:" data-toggle="modal" data-target="#FirstStep">
+                    参与ICO
+                </button>
+                <!--<img class="lazy" data-original="img/btn/joinBtn.png" src="img/btn/joinBtn.png" height="50px" onclick="validateTime()" style="cursor: pointer;"/>-->
+            </div>
+            <!--<div class="todata-div" id="showBtnDiv">
+                <a class="joinico" href="https://ico.etchain.org/ico/icomain.html" data-toggle="modal" data-target="#QueryModal">查看ICO &nbsp; 》</a>
+&lt;!&ndash;                    <a id="todata" href="#Section2" onclick="$(&#39;html,body&#39;).animate({scrollTop: $(&#39;#Section2&#39;).offset().top}, 500);" class="iconfont"></a>
+&ndash;&gt;                </div>-->
+
+            <!--<progress value="20" max="100" id="proDownFile" style="height: 30px;">完成60%</progress>-->
+
+            <div class="progress">
+                <div id="progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                     aria-valuemax="100" style="width: 100%;">
+                    <!--<span class="sr-only">40% 完成</span>-->
+                </div>
+            </div>
+            <div class="progressWord">当前募集进度 &nbsp;&nbsp;&nbsp;&nbsp;<span id="progressText">100%</span></div>
+        </div>
+
+        <div class="countdown text-center" id="award_factor_refresh" style="display: block;">
+            ICO 已经结束
+        </div>
+        <div class="countdown text-center" id="award_factor" style="display: none;">
+            <div style="width: 850px; margin-left: -225px; height: 100px;">
+                重要公告：<br>
+                <div style="text-align: left;">
+                    1、ETChain首轮ICO将于2017年7月15日24点截止。待市场稳定，我们再启动第二轮ICO，并承诺第二轮ICO时价值增幅是首轮的3倍。<br>
+
+                    2、为感谢首轮投资者对的支持，和维护您们的权益，ETChain将首轮ICO剩余IPT代币份额的30%，按比例配送给首轮投资者。<br>
+
+                    3、ETChain将于8月上旬在京举办“感恩答谢会”， 届时发布《ETChain（泛娱链）白皮书 v2.0》及平台建设发展计划。<br>
+
+
+                </div>
+
+            </div>
+            <div>
+                距ICO结束还有
+            </div>
+            <div class="row" style="width: 450px;">
+                <div>
+                    <span id="award_countdown_d">0</span>D
+                </div>
+                <div>
+                    <span id="award_countdown_h">0</span>H
+                </div>
+                <div>
+                    <span id="award_countdown_m">0</span>M
+                </div>
+                <div>
+                    <span id="award_countdown_s">0</span>S
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</header>
+<div class="modal" id="FirstStep" tabindex="-1" role="dialog" data-backdrop="static"
+     style="display: block; padding-right: 17px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title">
+                    流程介绍
+                </h4>
+            </div>
+            <div class="modal-body">
+                <p>您正在参与ETChain ICO，整个过程约耗时5分钟。</p>
+                <p>您将通过本网页生成一个ETChain私钥和对应的ETChain地址。这个私钥只有您持有，ETChain团队无法得知亦无法为您恢复。</p>
+                <p class="text-danger">因此请务必截屏、拍照或手写保存。</p>
+                <p>随后，您会被分配一个比特币地址。向该地址转入比特币即可参与ICO。</p><br>
+                <div class="text-center" style="padding-bottom:20px">
+                    <button id="createAccount_c" class="btn btn-primary" style="font-size:16px"
+                            onclick="create_antshares_account()">创建ETChain私钥
+                    </button>
+                    <br><br>
+                    <a href="javascript:">已有ETChain私钥</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="SecondStep" tabindex="-1" role="dialog" data-backdrop="static"
+     style="display: block; padding-right: 17px; margin-top: 450px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title">
+                    创建ETChain私钥
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="load">
+                    <div>正在生成ETChain账户，请稍后...</div>
+                </div>
+                <p>您生成的ETChain私钥如下</p>
+                <pre id="lbl_pk"></pre>
+                <p>对应的ETChain地址如下</p>
+                <pre id="lbl_address_a"></pre>
+                <p class="text-danger"><big>现在请截屏、拍照或手写保存, 注意:切勿泄露本截图</big></p>
+                <label>
+                    <input type="checkbox" id="remember" onchange="remember()">
+                    我已知道私钥是本次ICO的唯一凭证，我已妥善保管，安全备份
+                </label>
+
+            </div>
+            <div class="modal-footer text-center">
+                <a class="btn btn-disable" href="javascript:" id="create_account_next" target="_blank">进入您的ICO专属页面</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="ImportAccount" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title">请输入ETChain私钥或地址</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <input id="txt_address_a" onchange="checkImport()" type="text" class="form-control">
+                    </div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-info" id="pri_key_check" onclick="prikey_check()">验证</button>
+                    </div>
+                </div>
+                <br>
+                <p style="display:none" id="import_wait">检测到您输入的是私钥，正在生成对应的ETChain地址，请稍候……</p>
+                <p style="display:none" id="import_addr_p">对应的ETChain地址是：<span id="import_addr"></span></p>
+                <p style="display:none" id="addr_error" class="text-danger">无效的私钥或地址，请检查更正；或关闭本页，重新选择“参与ICO”</p>
+                <p style="display:none" id="ip_error" class="text-danger">此IP已经创建了过多的ETChain地址，请明天再试。</p>
+            </div>
+            <div class="modal-footer text-center">
+                <a class="btn btn-primary" href="javascript:" target="_blank" id="import_account_next">进入您的ICO专属页面</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="QueryModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title">查询</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <input id="txt_address_q" onchange="checkQuery()" type="text" class="form-control"
+                               placeholder="请输入ETChain私钥或地址">
+                    </div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-info" onclick="checkQuery()">验证</button>
+                    </div>
+                </div>
+                <br>
+                <p style="display:none" id="query_wait">检测到您输入的是私钥，正在生成对应的ETChain地址，请稍候……</p>
+                <p class="text-danger" style="display:none" id="query_err">输入有误，请重新输入</p>
+                <p style="display:none" id="query_addr_p">对应的ETChain地址是：<span id="query_addr"></span></p>
+            </div>
+            <div class="modal-footer text-center">
+                <a class="btn btn-disable" href="javascript:" target="_blank" id="query_next">查询</a>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="data2">
+    <div align="center">
+        <h1>关于 ETChain</h1>
+    </div>
+    <div align="left">
+        <p class="firstParagraph">
+            IP文化数字资产交易平台是IP资产权益持有人进行IP文化数字资产交易的中心，通过分布式记账、弱中心管理、数字加密传输、智能合约交易等区块链记账、管理、交易方式，为IP资产交易提供高效、安全、快捷保障。</p>
+    </div>
+    <div class="wordHeading">
+        <p>IP数字资产登记平台</p>
+        <p></p>
+        <p></p>
+        <p></p>
+    </div>
+    <div class="wordDetail">
+        <p>
+            为每一份登记的IP数字资产生成唯一的基于区块链技术的身份验证签名，依托区块链技术所具备的不可篡改、不可伪造、公开透明、智能合约、分布式存储、去中心化的六大特性，为IP数字资产提供登记、确权、公示、查询、管理的平台服务，从而有效提高IP数字资产的交易、流通和投资价值。
+        </p>
+        <p>
+            通过IP数字资产登记平台登记、确权优秀数字资产可以通过IP数字资产交易平台认证的中介服务机构申请进行IP数字资产证券化交易，使IP数字资产形成流量创造、流量升级到流量变现的核心价值演进。解决IP数字资产创意孵化难、产业化难、融资难、商业化难等行业问题。
+        </p>
+    </div>
+</section>
+
+<section class="data3">
+    <div class="indexbox2">
+        <div class="video-container">
+            <div class="video-bg">
+                <video onclick="this.pause()" onpause="pausevideo()" preload="none" autobuffer="autobuffer">
+                    <source src="img/vedio/ETChain.mp4">
+                </video>
+            </div>
+            <div class="playbtn-div">
+                <!--<span class="playbtn iconfont" onclick="playvideo()"></span>-->
+                <img onclick="playvideo()" class="playbtn" data-original="img/btn/play.png"
+                     src="./ETChain_ICO_files/play.png" alt=" play " width="48px">
+            </div>
+        </div>
+        <div class="indexbox2Width" align="center">
+            <div class="textbox" align="center">
+                <h1>ETChain 要做什么？</h1>
+                <p class="text">将 IP 从无形资产打造成数字资产！</p>
+                <div class="gotodetail"><a>了解更多详情 <img src="./ETChain_ICO_files/rightBtn.png" width="15px"
+                                                       style="vertical-align: center;"></a></div>
+            </div>
+        </div>
+    </div>
+</section>
+<section style="position: relative;">
+    <div class="bannerPc">
+        <img src="./ETChain_ICO_files/timeBg.png">
+    </div>
+</section>
+
+<section style="position: relative;height: 300px;">
+    <div class="bannerPc">
+        <img src="./ETChain_ICO_files/bg03.png" style="height: 300px;">
+    </div>
+    <div style="position: absolute;top: 0;left: 0;right: 0;bottom: 0;color: #FFFFFF;text-align: center;height: 300px;padding-top: 90px;">
+        <h1>关于 ETChain</h1>
+        <p style="margin-top: 30px;">IPT（IPToken）是ETChain（泛娱链）发行的数字代币， IPT将在系统发布前以ICO的方式预售给投资人。</p>
+        <p style="margin-top: 20px;">投资人不但可以获得IPT代币增值所带来的投资收益，而且还享有因所持IP资产权益份额在IP资产商业化后所带来的额外的收益。</p>
+    </div>
+</section>
+<section class="data4 plan">
+    <div align="center">
+        <h1>我们的计划</h1>
+    </div>
+    <div>
+        <p style="margin-top: 10px;">支持IP文化数字资产交易平台的开发、平台建设、宣传、推广等费用； </p>
+        <p style="margin-top: 10px;">获得足够量的优质IP资源储备，为后期IP交易做铺垫</p>
+    </div>
+    <div class="flexbox">
+        <div align="center" class="firPage">
+            <h3>ICO分发</h3>
+            <h1 style="color: orangered;">60%</h1>
+            <ul>
+                <li>IP研发、市场推广、商业分配 14%</li>
+                <li>社区发展基金 10%</li>
+                <li>创始团队、投资人、开发团队、顾问团队 16%</li>
+            </ul>
+        </div>
+        <div class="secPage">
+            <h3>代币总量</h3>
+            <h1 style="color: orangered;">5亿</h1>
+            <ul>
+                <li>发行代币 IPT（IPToken）</li>
+                <li>接受币种 比特币（BTC）以太坊（ETH）</li>
+                <li>ICO目标 3000比特币（BTC）</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<section class="data3 relative" id="awardmechanism">
+    <div class="bannerPc">
+        <img src="./ETChain_ICO_files/bg04.png">
+    </div>
+    <div class="awardDetail">
+        <h1>ICO 奖励机制</h1>
+        <p style="margin-top: 30px;">ETChain（泛娱链）ICO价格分为三阶段，根据参与的时间设定不同，具体如下 （所有时间均为北京时间）
+            。本次ICO不设置最低成功限制，筹满或ICO时间到期为止</p>
+        <table width="100%">
+            <tbody>
+            <tr align="center">
+                <td>北京段</td>
+                <td>早起鸟</td>
+                <td>阶段一</td>
+                <td>阶段二</td>
+            </tr>
+            <tr align="center">
+                <td>北京时间</td>
+                <td>7/6 - 7/10 20:00</td>
+                <td>7/10 - 7/20 20:00</td>
+                <td>7/20 - 7/31 20:00</td>
+            </tr>
+            <tr align="center">
+                <td>1BTC</td>
+                <td>99,000 IPT</td>
+                <td>90,000 IPT</td>
+                <td>85,000 IPT</td>
+            </tr>
+            <tr align="center">
+                <td>1ETH</td>
+                <td>10,760 IPT</td>
+                <td>9,780 IPT</td>
+                <td>9,240 IPT</td>
+            </tr>
+            </tbody>
+        </table>
+        <p style="text-indent: 20px;">备注：本次ICO将同时在ETChain官网、众创园和ICOBANK同时进行，具体分配份额以各网站公告为准。</p>
+    </div>
+</section>
+<section class="data4 plan">
+    <div align="center" style="margin-bottom: 10px;">
+        <h1>我们需要知道的</h1>
+    </div>
+    <div>
+        <div class="swiper-container ico_p swiper-container-horizontal">
+            <div class="swiper-wrapper" style="transform: translate3d(-2406px, 0px, 0px); transition-duration: 0ms;">
+                <div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-next" data-swiper-slide-index="2"
+                     style="width: 1203px;">
+                    <table width="100%">
+                        <tbody>
+                        <tr>
+                            <td width="10%" align="right"><h1>"</h1></td>
+                            <td width="90%" align="left">
+                                <p>支持ETChain（泛娱链）项目开发、编码、生态系统建设和咨询费（包括核心开发团队和支持人员的薪酬，第三方商业顾问、办公配件、耗材、工具和软件等费用）；</p>
+                                <p>支持IP文化数字资产交易平台的开发、平台建设、宣传、推广等费用；</p>
+                                <p>获得足够量的优质IP资源储备，为后期IP交易做铺垫；</p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="title">资金使用计划</div>
+                </div>
+                <div class="swiper-slide swiper-slide-prev" data-swiper-slide-index="0" style="width: 1203px;">
+                    <table width="100%">
+                        <tbody>
+                        <tr>
+                            <td width="10%" align="right"><h1>"</h1></td>
+                            <td width="90%" align="left">
+                                <p>参与IETChain（泛娱链）ICO的投资者赞助ETChain项目可以获得以下回报：</p>
+                                <p><strong>升值空间：</strong>做为ETChain（泛娱链）ICO的投资者，第一批将获得升值空间巨大的代币；</p>
+                                <p><strong>获得回报：</strong>随着平台的完善和运营，获得代币快速增长回报的机会（没有代币锁定期，ETChain（泛娱链）ICO的投资者可以在IPT（IPToken）上交易所后，出售购买的代币。）
+                                </p>
+                                <p><strong>收益分红：</strong>从未来IP文化数字资产交易中心产生的交易费用中获得分红，同时从其持有的市场价值的潜在增长中获利。</p>
+                                <p><strong>资产稳定：</strong>ETChain（泛娱链）使用区块链对IP资产进行商业化的变革，建立一个权益公开透明、资产价值共创的应用，使得代币与IP文化数字资产同步增值和受益，并通过IP资产确保代币的价值和稳定性。
+                                </p>
+                                <p><strong>社群参与：</strong>成为快速发展的IP开源社区的参与者；自动成为IP文化数字资产交易平台的会员。</p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="title">如何回报ICO参与者</div>
+                </div>
+                <div class="swiper-slide swiper-slide-active" data-swiper-slide-index="1" style="width: 1203px;">
+                    <table width="100%">
+                        <tbody>
+                        <tr>
+                            <td width="10%" align="right"><h1>"</h1></td>
+                            <td width="90%" align="left">
+                                <p>本次ICO获得的所有资金将会被存入多重签名钱包，多重签名钱包的密钥会由ETChain创始团队核心负责人持有，总共5人，任何资金的移动都必须通过5人的审核。</p>
+                                <p>ETChain（泛娱链）将邀请北京立信会计事务所每年对ETChain的资金使用情况进行核查，并出具审计报告，投资人和参与者可通过ETChain官网进行查询。</p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="title">如何保证资金安全</div>
+                </div>
+
+                <div class="swiper-slide swiper-slide-next" data-swiper-slide-index="2" style="width: 1203px;">
+                    <table width="100%">
+                        <tbody>
+                        <tr>
+                            <td width="10%" align="right"><h1>"</h1></td>
+                            <td width="90%" align="left">
+                                <p>支持ETChain（泛娱链）项目开发、编码、生态系统建设和咨询费（包括核心开发团队和支持人员的薪酬，第三方商业顾问、办公配件、耗材、工具和软件等费用）；</p>
+                                <p>支持IP文化数字资产交易平台的开发、平台建设、宣传、推广等费用；</p>
+                                <p>获得足够量的优质IP资源储备，为后期IP交易做铺垫；</p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="title">资金使用计划</div>
+                </div>
+                <div class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-prev" data-swiper-slide-index="0"
+                     style="width: 1203px;">
+                    <table width="100%">
+                        <tbody>
+                        <tr>
+                            <td width="10%" align="right"><h1>"</h1></td>
+                            <td width="90%" align="left">
+                                <p>参与IETChain（泛娱链）ICO的投资者赞助ETChain项目可以获得以下回报：</p>
+                                <p><strong>升值空间：</strong>做为ETChain（泛娱链）ICO的投资者，第一批将获得升值空间巨大的代币；</p>
+                                <p><strong>获得回报：</strong>随着平台的完善和运营，获得代币快速增长回报的机会（没有代币锁定期，ETChain（泛娱链）ICO的投资者可以在IPT（IPToken）上交易所后，出售购买的代币。）
+                                </p>
+                                <p><strong>收益分红：</strong>从未来IP文化数字资产交易中心产生的交易费用中获得分红，同时从其持有的市场价值的潜在增长中获利。</p>
+                                <p><strong>资产稳定：</strong>ETChain（泛娱链）使用区块链对IP资产进行商业化的变革，建立一个权益公开透明、资产价值共创的应用，使得代币与IP文化数字资产同步增值和受益，并通过IP资产确保代币的价值和稳定性。
+                                </p>
+                                <p><strong>社群参与：</strong>成为快速发展的IP开源社区的参与者；自动成为IP文化数字资产交易平台的会员。</p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="title">如何回报ICO参与者</div>
+                </div>
+            </div>
+            <!-- 如果需要分页器 -->
+            <div class="swiper-pagination swiper-pagination-bullets"><span class="swiper-pagination-bullet"></span><span
+                    class="swiper-pagination-bullet swiper-pagination-bullet-active"></span><span
+                    class="swiper-pagination-bullet"></span></div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container text-center">
+        <div class="row" style="margin:0;">
+            <div class="col-md-10 col-md-offset-1">
+                <img class="lazy footer-logo" data-original="img/logo.png" alt="Antshares"
+                     src="./ETChain_ICO_files/logo.png">
+                <p class="copyright">
+                    <span>	ETChain团队 © 2017 - 2020 </span>
+                    <span><a href="mailto:Contact@etchain.org"> Email: Contact@etchain.org</a></span>
+                </p>
+                <p class="copyright">
+                    <span>	QQ客服： <a href="tencent://message/?uin=42387503">42387503</a> </span>
+                    <span>	联系电话:18649777772 </span>
+                </p>
+                <img class="lazy footer-logo" data-original="img/weixin.jpg" alt="Antshares"
+                     src="./ETChain_ICO_files/weixin.jpg">
+            </div>
+        </div>
+
+    </div>
+</footer>
+<!--<div class="modal" id="WechatModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body row">
+                <div class="col-sm-12">
+                    <img class="lazy" data-original="img/rr.png" alt="wechat qrcode" src="img/rr.png">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+<!--提示信息模态框-->
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">注意</h4>
+            </div>
+            <div class="modal-body" id="messageText">在这里添加一些文本</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script src="./ETChain_ICO_files/jquery-3.1.1.min.js"></script>
+<script src="./ETChain_ICO_files/main.js"></script>
+
+</body>
+</html>

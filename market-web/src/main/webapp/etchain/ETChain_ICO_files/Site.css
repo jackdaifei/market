@@ -1,0 +1,172 @@
+﻿
+.body-content { padding: 0; }
+
+.dl-horizontal dt { white-space: normal; }
+
+input,
+select,
+textarea { max-width: 380px; }
+
+html, body { overflow:visible }
+
+body { font-size: 14px !important }
+
+body { font-family:"PingHei","Lucida Grande", "Lucida Sans Unicode", "STHeitiSC-Light", Helvetica,"BBAlpha Sans","S60 Sans","Hiragino Sans GB",Arial,"Microsoft YaHei","Verdana", SimHei, STXihei, SimSun, "WenQuanYi Micro Hei", sans-serif; }
+
+a:hover, a:focus { outline: none !important; }
+
+.navbar { font-size: 16px; margin-bottom:0; }
+
+* { outline:none !important }
+
+textarea {
+    resize: vertical;
+}
+
+#menu .active a { color: #fff; background-color: #333; }
+
+@font-face {
+  font-family: 'iconfont';  /* project id 33166 */
+  src: url('//at.alicdn.com/t/font_f1e5fw7qtmrhpvi.eot');
+  src: url('//at.alicdn.com/t/font_f1e5fw7qtmrhpvi.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_f1e5fw7qtmrhpvi.woff') format('woff'),
+  url('//at.alicdn.com/t/font_f1e5fw7qtmrhpvi.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_f1e5fw7qtmrhpvi.svg#iconfont') format('svg');
+}
+                    
+@media only screen and (max-width: 480px ) {
+    @-ms-viewport { width: 480px; }
+}
+.iconfont { font-family: iconfont; font-style:normal }
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus { outline: none; }
+
+.nomargin { margin: 0 !important; }
+
+#fp-nav ul li { margin: 7px; width: 16px; height: 16px; display: block; position: relative; }
+
+#fp-nav ul li a span { background: rgba(0,0,0,0); border-radius: 50%; border: 1px solid #fff; border-image: none; left: 2px; top: 2px; width: 10px; height: 10px; position: absolute; z-index: 1; }
+
+#fp-nav ul li a.active span { background: rgb(200,200,200); }
+
+div.section { text-align: center; font: 24px "Microsoft Yahei"; color: #fff; overflow-x:hidden }
+
+.section, .section p, .section a { font-size:20px }
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 { line-height:1.3 }
+
+.body-content { margin-top:51px; padding:0 50px }
+
+html, body { overflow:initial }
+
+.navbar-right { margin-right:0 }
+
+#editor { padding: 4px; border-radius: 3px; border: 1px solid rgb(204, 204, 204); border-image: none; height: 600px; overflow: scroll; border-collapse: separate; max-height: 250px; box-sizing: content-box; box-shadow: inset 0px 1px 1px 0px rgba(0,0,0,0.074509); background-color: white; -webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset; }
+#voiceBtn { border: transparent; border-image: none; width: 20px; color: transparent; cursor: pointer; box-shadow: none; transform: scale(2); background-color: transparent; -webkit-box-shadow: none; -webkit-transform: scale(2.0, 2.0); -moz-transform: scale(2.0, 2.0); }
+div[data-role='editor-toolbar'] { -ms-user-select: none; -webkit-user-select: none; -moz-user-select: none; user-select: none; }
+.dropdown-menu a { cursor: pointer; }
+
+.comment-div { border:1px dashed lightgray; border-radius:10px; padding:20px; background-color:#fffffc }
+
+.comment-div h2 { margin-bottom:35px }
+
+.comment-div textarea { max-width:500px }
+
+.comments-ul { color:#444; font-size:15px }
+
+.comments-ul li { margin:20px 0; border-bottom:1px dotted lightgray; line-height:2 }
+
+.comments-ul li div:first-child { color:steelblue; font-size:14px }
+
+.comments-ul li div:nth-child(2) { font-size:16px }
+
+.comments-ul li div:nth-child(3) { font-size:14px }
+
+#validate { font-size:14px; color:red; margin-bottom:10px }
+
+.underline { border-bottom:1px solid #d8d8d8 }
+
+.admin { color:#fff; background-color:rgb(237, 28, 36); border-radius:5px; margin-right:5px; padding:2px 5px }
+
+.github-ribbons { position: absolute; top: 50px; right: 0; border: 0; }
+
+.f-left { float:left }
+
+.f-right { float:right }
+
+.f-36 { font-size:36px }
+
+.pdf { vertical-align:-10px; height:46px }
+
+.navbar-default .navbar-toggle{ z-index:100 }
+
+.fbtn { color: white; padding: 10px 20px; line-height: 3; white-space: nowrap; }
+
+.no-link, .no-link:hover, .no-link:active, .no-link:focus { color:inherit; text-decoration:none; cursor:default }
+
+.with-background { background-image: url('../../Images/hero-chris.jpg'); padding: 30px 0; margin:0 -50px 0; background-position: center center; background-size: cover;}
+.section-container.blue { background-color: #0078d7; background-color: rgba(0, 120, 215, 0.8); color: #fff; }
+.section-container { padding: 30px; text-align:left }
+a.dupan, a.dupan:hover, a.dupan:active, a.dupan:focus { font-size:14px; line-height:2 }
+
+.platform .iconfont, .platform span { color:#444 }
+.platform > div { cursor:pointer; padding:20px 0;  }
+.platform > div.disable-menu { cursor:default }
+.platform .iconfont { margin-right:6px; font-size:28px; color:#666 }
+.platform span { font-weight:bold; font-size:18px; vertical-align:5px; color:#666 }
+.platform > div.disable-menu:hover { border:none; }
+.platform > div.active .iconfont, .platform > div:hover .iconfont, .platform > div:active .iconfont, .platform > div:focus .iconfont { color:#563d7c }
+.platform > div.active span,.platform > div:hover span, .platform > div:active span, .platform > div:focus span { color:#563d7c }
+.platform > div.disable-menu .iconfont, .platform > div.disable-menu:hover .iconfont, .platform > div.disable-menu:active .iconfont, .platform > div.disable-menu:focus .iconfont { color:#999 }
+.platform > div.disable-menu span, .platform > div.disable-menu:hover span, .platform > div.disable-menu:active span, .platform > div.disable-menu:focus span { color:#999 }
+.platform-bg > div { position:relative; width:983px; height:436px; background-repeat:no-repeat; background-size: contain }
+.platform-bg { background-image:url('/Images/download/download_bg.png'); margin:0 -50px 0 }
+.pc-div { background-image:url('/Images/download/pc_bg.png'); }
+.android-div { background-image:url('/Images/download/android_bg.png'); }
+.wp-div { background-image:url('/Images/download/wp_bg.png'); }
+.web-div { background-image:url('/Images/download/web_bg.png'); }
+.iphone-div { background-image:url('/Images/download/iphone_bg.png'); }
+
+.download { position:absolute; top:35px; right:0; width:400px; color:white; }
+.download h1, .download h2, .download h3 { text-shadow:1px 1px 2px #333; margin-bottom:15px }
+.download-btn, .download-btn:focus { display:inline-block; width:150px; height:45px; margin-top:15px; line-height:45px; font-size:18px; text-align:center; color:#333; border-radius:10px; text-decoration:none; background-color:#fff }
+.download-btn .iconfont { margin-right:8px }
+.download-btn:hover,.download-btn:active  { color:#000; text-decoration:none; background-color:#d7ecff }
+.app_qrcode { margin-top:50px; color:#000; }
+#android_qrcode canvas { height:110px; width:110px; }
+.dotnetframework { color:lightcyan }
+@media only screen and (min-width: 992px) {
+    .platform > div:hover, .platform > div.active { border-bottom:3px solid #563d7c; padding-bottom:17px }
+}
+@media only screen and (max-width: 767px) {
+    .platform > div { cursor:pointer; padding:10px 0;  }
+}
+@media only screen and (max-width: 480px) {   
+    .platform .iconfont { font-size:18px; }
+    .platform .android { vertical-align:1px; }
+     .platform .mac { vertical-align:2px; }
+    .platform span { font-size:12px; vertical-align:3px; }
+}
+
+
+/*开发学院*/
+.body-content { padding: 0 }
+.jumbotron { position: relative; padding: 60px 0; color: #fff; text-align: center; text-shadow: 0px 1px 3px rgba(0,0,0,0.4), 0px 0px 30px rgba(0,0,0,0.075);  background:linear-gradient(45deg,#0d5488 0,#1279b3 100%); }
+.jumbotron img { max-width:100%; }
+.jumbotron.masthead { margin-bottom:0; border-radius: 0; color:#fff;  }
+.jumbotron::after { content: ""; display: block; position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; background: url(../Images/bs-docs-masthead-pattern.png) repeat center center; opacity: 0.4; }
+.bc-social { padding: 15px 0; font-size:16px; text-align: center; background-color: #f5f5f5; border-top: 1px solid #fff; border-bottom: 1px solid #ddd; }
+.bc-social-buttons { margin-left: 0px; margin-bottom: 0px; padding-left: 0px; list-style: none; }
+.bc-social-buttons li { display: inline-block; line-height: 1; color: #555; }
+.bc-social-buttons > li + li::before { padding: 0 10px; color: #ccc; content: "|"; }
+.bc-social-buttons li a { color: #555; }
+.bc-social-buttons li .iconfont { font-size: 20px; margin-right:8px }
+.page-header { padding-bottom: 9px; margin: 40px auto 20px; border-bottom: 1px solid #eee; }
+.projects-header { width: 60%; text-align: center; margin: 60px 0 10px; font-weight: 200; margin-bottom: 40px; display: block; margin-left: auto; margin-right: auto; }
+.test{ padding:40px; color:white; background-color:#1279b3; text-align:center; }
+.test p { font-size:16px; line-height:1.8 }
+div.option span { margin-right:20px}
+div.option label {font-weight:normal}
+.job{font-size:14px; text-align:left; margin-top:-130px; padding:0px}
+.job ol { padding-left:20px}
+.job-details { width:70%; margin:50px 15%; height:280px; overflow-y:scroll;  }

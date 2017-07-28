@@ -31,7 +31,7 @@ public class TestController {
             }
 
             String url = "https://ico.etchain.org/etchain/walletDetail?walletAddress=" + address;
-            JSONObject json = HttpUtils.httpGetWithResponseJSON(url, null);
+            JSONObject json = null ;//HttpUtils.httpGetWithResponseJSON(url, null);
             System.out.println(json);
             if ("0000".equals(json.getString("retCode"))) {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
