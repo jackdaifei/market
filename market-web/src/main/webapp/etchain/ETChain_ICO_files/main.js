@@ -17,13 +17,13 @@ function createAccount()
         ]);
     }).then(function (results)
     {
-        //  var account = {};
-        //  account.key = results[0];
-        //  account.key = results[1];
-        // return account;
         $("#lbl_pk").text(results[0]);
         $("#lbl_address_a").text(results[1]);
-        $(".load").hide();
+        //$(".load").hide();
+        var account = {};
+        account.key = results[0];
+        account.key = results[1];
+        return account;
     });
 }
 

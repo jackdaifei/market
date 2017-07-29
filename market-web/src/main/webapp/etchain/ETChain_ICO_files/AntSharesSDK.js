@@ -1104,7 +1104,7 @@ var AntShares;
             if (value == null)
                 value = new ArrayBuffer(20);
             if (value.byteLength != 20)
-                throw new RangeError();
+                value = new ArrayBuffer(20);
             _super.call(this, new Uint32Array(value));
         }
         Object.defineProperty(Uint160, "Zero", {
@@ -1130,7 +1130,7 @@ var AntShares;
             if (value == null)
                 value = new ArrayBuffer(32);
             if (value.byteLength != 32)
-                throw new RangeError();
+                value = new ArrayBuffer(32);
             _super.call(this, new Uint32Array(value));
         }
         Object.defineProperty(Uint256, "Zero", {
