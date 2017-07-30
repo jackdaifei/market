@@ -1,10 +1,4 @@
-﻿//创建小蚁账户的按钮
-function create_antshares_account()
-{
-    createAccount();
-};
-
-function createAccount()
+﻿function createAccount()
 {
     AntShares.Wallets.Account.create().then(function (result)
     {
@@ -19,11 +13,13 @@ function createAccount()
     {
         $("#lbl_pk").text(results[0]);
         $("#lbl_address_a").text(results[1]);
-        //$(".load").hide();
-        var account = {};
-        account.key = results[0];
-        account.key = results[1];
-        return account;
+        $(".load").hide();
+        $.ajax({
+            url:'/etchain/checkAddress',
+            data:{pk:results[0], address:results[1]},
+            success:function() {
+            }
+        });
     });
 }
 

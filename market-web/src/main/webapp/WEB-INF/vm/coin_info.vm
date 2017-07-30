@@ -8,47 +8,53 @@
 </head>
 <body>
 <div class="container theme-showcase" role="main">
+    <div class="row">&nbsp;</div>
+    <div class="row">&nbsp;</div>
+\
     <div class="row">
         <div class="col-sm-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Panel title</h3>
-                </div>
-                <div class="panel-body">
-                    Panel content
-                </div>
-            </div>
-
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Panel title</h3>
+                    <h3 class="panel-title">SNT</h3>
                 </div>
                 <div class="panel-body">
-                    Panel content
+                    <table style="width: 100%">
+                        <tr>
+                            <td>平台</td>
+                            <td>买一</td>
+                            <td>卖一</td>
+                        </tr>
+                        <tr>
+                            <td>比特儿</td>
+                            <td>0.5</td>
+                            <td>0.35</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
+        </div>
 
+        <div class="col-sm-4">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Panel title</h3>
+                    <h3 class="panel-title">SNT</h3>
                 </div>
                 <div class="panel-body">
-                    Panel content
+                    <table style="width: 100%">
+                        <tr>
+                            <td>平台</td>
+                            <td>买一</td>
+                            <td>卖一</td>
+                        </tr>
+                        <tr>
+                            <td>比特儿</td>
+                            <td>0.5</td>
+                            <td>0.35</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Panel title</h3>
-                </div>
-                <div class="panel-body">
-                    Panel content
-                </div>
-            </div>
-        </div><!-- /.col-sm-4 -->
-
-
-
+        </div>
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
