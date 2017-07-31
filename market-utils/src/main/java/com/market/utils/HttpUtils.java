@@ -55,14 +55,14 @@ public class HttpUtils {
     }
 
     /**
-     * post请求，返回JSON
+     * post请求，返回JSONObject
      * @param url
      * @param paramList
      * @param headers
      * @return
      * @throws Exception
      */
-    public static JSONObject httpPostWithResponseJSON(String url, List<NameValuePair> paramList, Header[] headers) throws Exception {
+    public static JSONObject httpPostWithResponseJSONObject(String url, List<NameValuePair> paramList, Header[] headers) throws Exception {
         String responseStr = httpPostWithResponseString(url, paramList, headers);
         return JSONObject.parseObject(responseStr);
     }
@@ -113,9 +113,21 @@ public class HttpUtils {
      * @return
      * @throws Exception
      */
-    public static JSONObject httpGetWithResponseJSON(String url, Header[] headers) throws Exception {
+    public static JSONObject httpGetWithResponseJSONObject(String url, Header[] headers) throws Exception {
         String responseStr = httpGetWithResponseString(url, headers);
         return JSONObject.parseObject(responseStr);
+    }
+
+    /**
+     * get请求，返回JSONArray
+     * @param url
+     * @param headers
+     * @return
+     * @throws Exception
+     */
+    public static JSONArray httpGetWithResponseJSONArray(String url, Header[] headers) throws Exception {
+        String responseStr = httpGetWithResponseString(url, headers);
+        return JSONArray.parseArray(responseStr);
     }
 
     public static JSONObject getWithProxy(String url, String ip, int port) throws Exception {

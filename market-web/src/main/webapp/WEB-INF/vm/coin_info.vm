@@ -9,8 +9,17 @@
 <body>
 <div class="container theme-showcase" role="main">
     <div class="row">&nbsp;</div>
-    <div class="row">&nbsp;</div>
-\
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row">
+        <pre>
+            倾家荡产四大捷径：1，追涨杀跌；2，期货杠杆；3，融资融币；4，短线神操作。
+            人生巅峰四条大道：1，踏实工作；2，闲钱投资；3、长线持有；4，按时吃饭睡觉。
+                                                ————币界生存法则，非绝世高手不得无视。
+                            （币界十天江湖十年，凶残程度古今罕有，谨记生存法则可保不死）<img src="//img.t.sinajs.cn/t4/appstyle/expression/ext/normal/b6/doge_org.gif" /><img src="//img.t.sinajs.cn/t4/appstyle/expression/ext/normal/b6/doge_org.gif" /></pre>
+    </div>
+    <div class="row"></div>
+
     <div class="row">
         <div class="col-sm-4">
             <div class="panel panel-primary">
@@ -59,4 +68,15 @@
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </body>
+<script>
+    $.ajax({
+        url:"/coin/price",
+        data:"",
+        type:"get",
+        success:function(data){
+            debugger;
+            console.log(data);
+        }
+    })
+</script>
 </html>
