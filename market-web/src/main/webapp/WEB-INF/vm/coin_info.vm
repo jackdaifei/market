@@ -20,8 +20,8 @@
     </div>
     <div class="row"></div>
 
-    <div class="row">
-        <div class="col-sm-4">
+    <div class="row" id="content">
+        #*<div class="col-sm-4">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">SNT</h3>
@@ -41,42 +41,55 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </div>*#
 
-        <div class="col-sm-4">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">SNT</h3>
-                </div>
-                <div class="panel-body">
-                    <table style="width: 100%">
-                        <tr>
-                            <td>平台</td>
-                            <td>买一</td>
-                            <td>卖一</td>
-                        </tr>
-                        <tr>
-                            <td>比特儿</td>
-                            <td>0.5</td>
-                            <td>0.35</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
+
     </div>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="/etchain/ETChain_ICO_files/jquery-3.2.1.js"></script>
 </body>
 <script>
     $.ajax({
         url:"/coin/price",
-        data:"",
         type:"get",
         success:function(data){
-            debugger;
-            console.log(data);
+            var html = '';
+            for(var key in data) {
+                html += appendHtml(key, data[key]);
+            }
+            $('#content').html(html);
         }
     })
+
+    function appendHtml(key, array) {
+        var html = [];
+        html.push('<div class="col-sm-4">');
+        html.push('    <div class="panel panel-primary">');
+        html.push('	    <div class="panel-heading">');
+        html.push('	        <h3 class="panel-title">'+ key + '</h3>');
+        html.push('	    </div>');
+        html.push('	    <div class="panel-body">');
+        html.push('	        <table style="width: 100%">');
+        html.push('		        <tr>');
+        html.push('		            <td>平台</td>');
+        html.push('		            <td>价格</td>');
+        html.push('		            <td>卖一价/数量</td>');
+        html.push('		            <td>买一价/数量</td>');
+        html.push('		        </tr>');
+        for(var i=0;i<array.length;i++) {
+            var coinInfo = array[i];
+            html.push('		        <tr>');
+            html.push('		            <td>' + coinInfo.platform + '</td>');
+            html.push('		            <td>' + coinInfo.coinPriceVO.coinPrice + '</td>');
+            html.push('		            <td>' + coinInfo.coinPriceVO.sellFirstPrice + '/' + coinInfo.coinPriceVO.sellFirstCount + '</td>');
+            html.push('		            <td>' + coinInfo.coinPriceVO.buyFirstPrice + '/' + coinInfo.coinPriceVO.buyFirstCount + '</td>');
+            html.push('		        </tr>');
+        }
+        html.push('	        </table>');
+        html.push('	    </div>');
+        html.push('    </div>');
+        html.push('</div>');
+        return html.join('');
+    }
 </script>
 </html>

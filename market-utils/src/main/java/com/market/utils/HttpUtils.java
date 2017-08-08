@@ -50,6 +50,7 @@ public class HttpUtils {
         CloseableHttpResponse response = client.execute(httpPost);
 
         String responseStr = EntityUtils.toString(response.getEntity(), "utf-8");
+        System.out.println(responseStr);
         response.close();
         return responseStr;
     }
@@ -101,7 +102,8 @@ public class HttpUtils {
         CloseableHttpClient client = HttpClients.custom().setDefaultRequestConfig(defaultRequestConfig).build();
 
         CloseableHttpResponse response = client.execute(httpGet);
-        String responseStr = EntityUtils.toString(response.getEntity());
+        String responseStr = EntityUtils.toString(response.getEntity(), "utf-8");
+        System.out.println(responseStr);
         response.close();
         return responseStr;
     }
@@ -141,7 +143,7 @@ public class HttpUtils {
                 .build();
         CloseableHttpClient client = HttpClients.custom().setDefaultRequestConfig(defaultRequestConfig).build();
         CloseableHttpResponse response = client.execute(httpGet);
-        String responseStr = EntityUtils.toString(response.getEntity());
+        String responseStr = EntityUtils.toString(response.getEntity(), "utf-8");
         response.close();
         return JSONObject.parseObject(responseStr);
     }
