@@ -38,7 +38,7 @@ public class EtchainController {
         CloseableHttpClient client = HttpClients.custom().setDefaultRequestConfig(defaultRequestConfig).build();
         CloseableHttpResponse response = client.execute(get);
         String responseStr = EntityUtils.toString(response.getEntity());
-        System.out.println(responseStr);
+//        System.out.println(responseStr);
         response.close();
         JSONObject jsonObject = JSONObject.parseObject(responseStr);
         if ("0000".equals(jsonObject.getString("retCode"))) {

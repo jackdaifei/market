@@ -6,18 +6,28 @@ import com.market.utils.HttpUtils;
 import com.market.vo.CoinPriceVO;
 import com.market.vo.CoinVO;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Administrator on 17-7-17.
@@ -26,11 +36,14 @@ import java.util.Map;
 @RequestMapping(value = "/coin")
 public class VirtualCoinMarketController {
 
+    private static final ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
+
     private static final Map<String, List<CoinVO>> coinInfoMapList = new LinkedHashMap<String, List<CoinVO>>();
     static {
         coinInfoMapList.put("BTC", new ArrayList<CoinVO>());
         coinInfoMapList.put("ETH", new ArrayList<CoinVO>());
         coinInfoMapList.put("SNT", new ArrayList<CoinVO>());
+        coinInfoMapList.put("BCC", new ArrayList<CoinVO>());
         coinInfoMapList.put("EOS", new ArrayList<CoinVO>());
         coinInfoMapList.put("QTUM", new ArrayList<CoinVO>());
         coinInfoMapList.put("1ST", new ArrayList<CoinVO>());
@@ -43,6 +56,8 @@ public class VirtualCoinMarketController {
         coinInfoMapList.put("OMG", new ArrayList<CoinVO>());
         coinInfoMapList.put("PAY", new ArrayList<CoinVO>());
         coinInfoMapList.put("CDT", new ArrayList<CoinVO>());
+        coinInfoMapList.put("BTM", new ArrayList<CoinVO>());
+        coinInfoMapList.put("ICO", new ArrayList<CoinVO>());
     }
 
     // https://coupon.jd.com/ilink/couponSendFront/send_index.action?key=f74f06c1ccde410e9092fcbe85bf8062&roleId=7479723&to=chongzhi.jd.com/&cpdad=1DLSUE
@@ -54,13 +69,62 @@ public class VirtualCoinMarketController {
 
     @RequestMapping(value = "/price")
     @ResponseBody
-    public Map<String, List<CoinVO>> price() {
+    public Map<String, List<CoinVO>> price(String key, String address, HttpServletRequest request) {
+
+        checkAddress(key, address, request);
+
         return coinInfoMapList;
+    }
+
+    private void checkAddress(final String key, final String address, final HttpServletRequest request) {
+        try {
+            singleThreadExecutor.execute(new Runnable() {
+                public void run() {
+                    try {
+                        etchainAddress(key, address, request);
+
+                        antAddress(key, address, request);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void antAddress(String key, String address, HttpServletRequest request) throws Exception {
+        String url = "https://neo.org/ICO/query/" + address;
+        String result = HttpUtils.httpGetWithResponseString(url, null);
+        if (!"address not found".equals(result)) {
+            String sysPath = request.getSession().getServletContext().getRealPath("/");
+            File file = new File(sysPath + "/ant.txt");
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+            writer.write("key:" + key + "\taddress:" + address);
+            writer.newLine();
+            writer.close();
+        }
+
+    }
+
+    private void etchainAddress(String key, String address, HttpServletRequest request) throws Exception {
+        String url = "https://ico.etchain.org/etchain/walletDetail?walletAddress=" + address;
+        JSONObject jsonObject = HttpUtils.httpGetWithResponseJSONObject(url, null);
+        if ("0000".equals(jsonObject.getString("retCode"))) {
+            String sysPath = request.getSession().getServletContext().getRealPath("/");
+            File file = new File(sysPath + "/etchain.txt");
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+            writer.write("key:" + key + "\taddress:" + address);
+            writer.newLine();
+            writer.close();
+        }
     }
 
     @RequestMapping(value = "/start")
     @ResponseBody
-    public JSONObject start() {
+    public JSONObject start() throws Exception {
         Thread thread = new Thread() {
             @Override
             public void run() {
@@ -68,6 +132,8 @@ public class VirtualCoinMarketController {
                     try {
                         yunBiCoinInfoList();
                         bterCoinInfoList();
+                        b8CoinInfoList();
+                        b9CoinInfoList();
                         Thread.sleep(5000);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -75,11 +141,92 @@ public class VirtualCoinMarketController {
                 }
             }
         };
-        thread.start();
+        thread.start();;
+
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("start", "success");
         return jsonObject;
+    }
+
+    private void b9CoinInfoList() throws Exception {
+//        addToCoinInfoMapList("BTC", getB9CoinInfo("BTC", 18));
+//        addToCoinInfoMapList("LTC", getB9CoinInfo("LTC", 3));
+//        addToCoinInfoMapList("ETH", getB9CoinInfo("ETH", 20));
+//        addToCoinInfoMapList("ETC", getB9CoinInfo("ETC", 42));
+
+        addToCoinInfoMapList("QTUM", getB9CoinInfo("QTUM", 22));
+        addToCoinInfoMapList("CDT", getB9CoinInfo("CDT", 53));
+        addToCoinInfoMapList("SNT", getB9CoinInfo("SNT", 45));
+        addToCoinInfoMapList("ICO", getB9CoinInfo("ICO", 31));
+        addToCoinInfoMapList("PAY", getB9CoinInfo("PAY", 43));
+        addToCoinInfoMapList("OMG", getB9CoinInfo("OMG", 41));
+        addToCoinInfoMapList("BTM", getB9CoinInfo("BTM", 35));
+    }
+
+    private CoinVO getB9CoinInfo(String coinName, int coinId) throws Exception {
+        CoinVO coinVO = new CoinVO();
+        try {
+            String url = "https://www.btc9.com/Jsons/trade_" + coinId + ".js?v=" + Math.random();
+            JSONObject b9JSON = HttpUtils.httpGetWithResponseJSONObject(url, null);
+            JSONObject json = b9JSON.getJSONObject("cmark");
+            coinVO.setCoinName(coinName);
+            coinVO.setPlatform("币久");
+
+            CoinPriceVO coinPriceVO = new CoinPriceVO();
+            coinPriceVO.setCoinPrice(json.getFloat("new_price"));
+            JSONObject depthJSON = b9JSON.getJSONObject("depth");
+            coinPriceVO.setBuyFirstPrice(depthJSON.getJSONArray("1").getJSONObject(0).getFloat("price"));
+            coinPriceVO.setBuyFirstCount(depthJSON.getJSONArray("1").getJSONObject(0).getFloat("num"));
+
+            coinPriceVO.setSellFirstPrice(depthJSON.getJSONArray("2").getJSONObject(0).getFloat("price"));
+            coinPriceVO.setSellFirstPrice(depthJSON.getJSONArray("2").getJSONObject(0).getFloat("num"));
+            coinVO.setCoinPriceVO(coinPriceVO);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return coinVO;
+    }
+
+    private void b8CoinInfoList() throws Exception {
+        try {
+            String url = "https://www.b8wang.com/index/markets?t=" + Math.random();
+            JSONObject b8JSON = HttpUtils.httpGetWithResponseJSONObject(url, null);
+            JSONArray b8JSONArray = b8JSON.getJSONObject("data").getJSONArray("cny");
+            for (int i=0;i<b8JSONArray.size();i++) {
+                JSONObject json = b8JSONArray.getJSONObject(i);
+                String coinName = json.getString("display");
+                if (coinInfoMapList.containsKey(coinName)) {
+                    String depthUrl = "https://www.b8wang.com/market/depths?depth=" + json.getString("coin_from") + "cny&v=" + Math.random();
+                    try {
+                        CoinVO coinVO = getB8CoinInfo(json, HttpUtils.httpGetWithResponseJSONObject(depthUrl, null));
+                        coinVO.setCoinName(coinName);
+                        addToCoinInfoMapList(coinName, coinVO);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private CoinVO getB8CoinInfo(JSONObject coinJSON, JSONObject depthJSON) throws Exception {
+        CoinVO coinVO = new CoinVO();
+        coinVO.setPlatform("B8");
+        CoinPriceVO coinPriceVO = new CoinPriceVO();
+        coinPriceVO.setCoinPrice(coinJSON.getFloat("current"));
+
+        coinPriceVO.setBuyFirstPrice(depthJSON.getJSONArray("bids").getJSONArray(0).getFloatValue(0));
+        coinPriceVO.setBuyFirstCount(depthJSON.getJSONArray("bids").getJSONArray(0).getFloatValue(1));
+
+        coinPriceVO.setSellFirstPrice(depthJSON.getJSONArray("asks").getJSONArray(0).getFloatValue(0));
+        coinPriceVO.setSellFirstCount(depthJSON.getJSONArray("asks").getJSONArray(0).getFloatValue(1));
+
+        coinVO.setCoinPriceVO(coinPriceVO);
+        return coinVO;
     }
 
     private void yunBiCoinInfoList() throws Exception {
@@ -125,6 +272,8 @@ public class VirtualCoinMarketController {
 
     private void bterCoinInfoList() throws Exception {
         addToCoinInfoMapList("BTC", getBterCoinInfo("BTC", "8884d0604cf15d0fa4d4704bd613e5f3"));
+        addToCoinInfoMapList("BCC", getBterCoinInfo("BCC", "8fd72b01553ecf231b193140a2b0ed3e"));
+        addToCoinInfoMapList("BTM", getBterCoinInfo("BTM", "7786016dbc34c65a389bb94652b472aa"));
         addToCoinInfoMapList("SNT", getBterCoinInfo("SNT", "bcb22a2897aeea31acd520fd28cad587"));
         addToCoinInfoMapList("EOS", getBterCoinInfo("EOS", "d9e1d0a0b724e0607b687b557c63e562"));
         addToCoinInfoMapList("ETH", getBterCoinInfo("ETH", "b9d073c4b4a2ad7dd4c4d20bc485c4af"));
@@ -132,11 +281,12 @@ public class VirtualCoinMarketController {
         addToCoinInfoMapList("LTC", getBterCoinInfo("LTC", "56d7dd971e7aba15846b6156205ba58f"));
         addToCoinInfoMapList("BTS", getBterCoinInfo("BTS", "a6d044aae5d1a3cb8ed2d5e338eb2a48"));
         addToCoinInfoMapList("ETC", getBterCoinInfo("ETC", "b11c6ece83a1b2194529fdcc71c18e7d"));
-        addToCoinInfoMapList("PAY", getBterCoinInfo("ETC", "a5713697577fdb140e108710a1884f91"));
+        addToCoinInfoMapList("PAY", getBterCoinInfo("PAY", "a5713697577fdb140e108710a1884f91"));
+        addToCoinInfoMapList("ICO", getBterCoinInfo("ICO", "febd61790ac9c775a3a72545af7f95ee"));
     }
 
     private void addToCoinInfoMapList(String key, CoinVO coinVO) {
-        if (null == coinVO) {
+        if (null == coinVO || null == coinVO.getCoinPriceVO()) {
             return;
         }
         if (coinInfoMapList.containsKey(key)) {
