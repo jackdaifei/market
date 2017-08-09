@@ -6,6 +6,9 @@
     <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
 </head>
+<style type="text/css">
+    .panel-body {height: 200px;}
+</style>
 <body>
 <div class="container theme-showcase" role="main">
     <div class="row">&nbsp;</div>
@@ -27,23 +30,35 @@
                     <h3 class="panel-title">SNT</h3>
                 </div>
                 <div class="panel-body">
-                    <table style="width: 100%">
-                        <tr>
-                            <td>平台</td>
-                            <td>买一</td>
-                            <td>卖一</td>
-                        </tr>
-                        <tr>
-                            <td>比特儿</td>
-                            <td>0.5</td>
-                            <td>0.35</td>
-                        </tr>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>平台</th>
+                                <th>价格</th>
+                                <th>卖一价/数量</th>
+                                <th>买一价/数量</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>1,001</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            <tr>
+                                <td>1,001</td>
+                                <td>Lorem</td>
+                                <td>ipsum</td>
+                                <td>dolor</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>*#
-
-
     </div>
 </div>
 <script src="/etchain/ETChain_ICO_files/jquery-3.2.1.js"></script>
@@ -63,30 +78,71 @@
 
     function appendHtml(key, array) {
         var html = [];
-        html.push('<div class="col-sm-4">');
+//        html.push('<div class="col-sm-4">');
+//        html.push('    <div class="panel panel-primary">');
+//        html.push('	    <div class="panel-heading">');
+//        html.push('	        <h3 class="panel-title">'+ key + '</h3>');
+//        html.push('	    </div>');
+//        html.push('	    <div class="panel-body">');
+//        html.push('	        <table style="width: 100%">');
+//        html.push('		        <tr>');
+//        html.push('		            <td>平台</td>');
+//        html.push('		            <td>价格</td>');
+//        html.push('		            <td>卖一价/数量</td>');
+//        html.push('		            <td>买一价/数量</td>');
+//        html.push('		        </tr>');
+//        for(var i=0;i<array.length;i++) {
+//            var coinInfo = array[i];
+//            html.push('		        <tr>');
+//            html.push('		            <td>' + coinInfo.platform + '</td>');
+//            html.push('		            <td>' + coinInfo.coinPriceVO.coinPrice + '</td>');
+//            html.push('		            <td>' + coinInfo.coinPriceVO.sellFirstPrice + '/' + coinInfo.coinPriceVO.sellFirstCount + '</td>');
+//            html.push('		            <td>' + coinInfo.coinPriceVO.buyFirstPrice + '/' + coinInfo.coinPriceVO.buyFirstCount + '</td>');
+//            html.push('		        </tr>');
+//        }
+//        html.push('	        </table>');
+//        html.push('	    </div>');
+//        html.push('    </div>');
+//        html.push('</div>');
+
+        html.push('<div class="col-sm-6">');
         html.push('    <div class="panel panel-primary">');
-        html.push('	    <div class="panel-heading">');
-        html.push('	        <h3 class="panel-title">'+ key + '</h3>');
-        html.push('	    </div>');
-        html.push('	    <div class="panel-body">');
-        html.push('	        <table style="width: 100%">');
-        html.push('		        <tr>');
-        html.push('		            <td>平台</td>');
-        html.push('		            <td>价格</td>');
-        html.push('		            <td>卖一价/数量</td>');
-        html.push('		            <td>买一价/数量</td>');
-        html.push('		        </tr>');
+        html.push('	<div class="panel-heading">');
+        html.push('	    <h3 class="panel-title">'+ key + '</h3>');
+        html.push('	</div>');
+        html.push('	<div class="panel-body">');
+        html.push('	    <div class="table-responsive">');
+        html.push('		<table class="table table-striped">');
+        html.push('		    <thead>');
+        html.push('		    <tr>');
+        html.push('			<th>平台</th>');
+        html.push('			<th>价格</th>');
+        html.push('			<th>买一价/数量</th>');
+        html.push('			<th>卖一价/数量</th>');
+        html.push('		    </tr>');
+        html.push('		    </thead>');
+        html.push('		    <tbody>');
         for(var i=0;i<array.length;i++) {
             var coinInfo = array[i];
-            html.push('		        <tr>');
-            html.push('		            <td>' + coinInfo.platform + '</td>');
-            html.push('		            <td>' + coinInfo.coinPriceVO.coinPrice + '</td>');
-            html.push('		            <td>' + coinInfo.coinPriceVO.sellFirstPrice + '/' + coinInfo.coinPriceVO.sellFirstCount + '</td>');
-            html.push('		            <td>' + coinInfo.coinPriceVO.buyFirstPrice + '/' + coinInfo.coinPriceVO.buyFirstCount + '</td>');
-            html.push('		        </tr>');
+            html.push('		    <tr>');
+            html.push('			<td>' + coinInfo.platform + '</td>');
+            var upDownFlag = coinInfo.upDownFlag;
+            if (upDownFlag == 1) {
+                html.push('			<td>' + coinInfo.coinPriceVO.coinPrice + ' <span class="glyphicon glyphicon-arrow-up" aria-hidden="true" style="color: green;"></span></td>');
+            } else if (upDownFlag == -1) {
+                html.push('			<td>' + coinInfo.coinPriceVO.coinPrice + ' <span class="glyphicon glyphicon-arrow-down" aria-hidden="true" style="color: red;"></span></td>');
+            } else {
+                html.push('			<td>' + coinInfo.coinPriceVO.coinPrice + ' <span class="glyphicon glyphicon-arrow-right" aria-hidden="true" style="color: black;"></span></td>');
+            }
+
+            html.push('			<td>' + coinInfo.coinPriceVO.buyFirstPrice + '/' + coinInfo.coinPriceVO.buyFirstCount + '</td>');
+            html.push('			<td>' + coinInfo.coinPriceVO.sellFirstPrice + '/' + coinInfo.coinPriceVO.sellFirstCount + '</td>');
+            html.push('		    </tr>');
         }
-        html.push('	        </table>');
+        html.push('		    </tbody>');
+        html.push('		</table>');
         html.push('	    </div>');
+        html.push('	</div>');
         html.push('    </div>');
         html.push('</div>');
         return html.join('');

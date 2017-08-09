@@ -1,29 +1,23 @@
 package com.market.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import com.market.utils.HttpUtils;
 import com.market.vo.CoinPriceVO;
 import com.market.vo.CoinVO;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Administrator on 17-7-17.
@@ -32,10 +26,7 @@ import java.util.concurrent.TimeUnit;
 @RequestMapping(value = "/coin")
 public class VirtualCoinMarketController {
 
-    private Cache<String, List<CoinVO>> coinCache = CacheBuilder.newBuilder().maximumSize(10).expireAfterWrite(5, TimeUnit.SECONDS).build();
-
-
-    private static final Map<String, List<CoinVO>> coinInfoMapList = new HashMap<String, List<CoinVO>>();
+    private static final Map<String, List<CoinVO>> coinInfoMapList = new LinkedHashMap<String, List<CoinVO>>();
     static {
         coinInfoMapList.put("BTC", new ArrayList<CoinVO>());
         coinInfoMapList.put("ETH", new ArrayList<CoinVO>());
@@ -64,16 +55,6 @@ public class VirtualCoinMarketController {
     @RequestMapping(value = "/price")
     @ResponseBody
     public Map<String, List<CoinVO>> price() {
-        try {
-            yunBiCoinInfoList();
-            bterCoinInfoList();
-            System.out.println(JSON.toJSON(coinInfoMapList));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
         return coinInfoMapList;
     }
 
@@ -84,10 +65,17 @@ public class VirtualCoinMarketController {
             @Override
             public void run() {
                 while (true) {
-
+                    try {
+                        yunBiCoinInfoList();
+                        bterCoinInfoList();
+                        Thread.sleep(5000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         };
+        thread.start();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("start", "success");
@@ -144,9 +132,13 @@ public class VirtualCoinMarketController {
         addToCoinInfoMapList("LTC", getBterCoinInfo("LTC", "56d7dd971e7aba15846b6156205ba58f"));
         addToCoinInfoMapList("BTS", getBterCoinInfo("BTS", "a6d044aae5d1a3cb8ed2d5e338eb2a48"));
         addToCoinInfoMapList("ETC", getBterCoinInfo("ETC", "b11c6ece83a1b2194529fdcc71c18e7d"));
+        addToCoinInfoMapList("PAY", getBterCoinInfo("ETC", "a5713697577fdb140e108710a1884f91"));
     }
 
     private void addToCoinInfoMapList(String key, CoinVO coinVO) {
+        if (null == coinVO) {
+            return;
+        }
         if (coinInfoMapList.containsKey(key)) {
             List<CoinVO> coinVOList = coinInfoMapList.get(key);
             if (CollectionUtils.isNotEmpty(coinVOList)) {
@@ -155,13 +147,17 @@ public class VirtualCoinMarketController {
                     if (coin.getPlatform().equals(coinVO.getPlatform())) {
                         hasPlatform = true;
                         if (coin.getCoinPriceVO().getCoinPrice() > coinVO.getCoinPriceVO().getCoinPrice()) { // 历史价格大于最新价格，跌
-                            coinVO.setUpDownFlag(-1);
+                            coin.setUpDownFlag(-1);
                         } else if (coin.getCoinPriceVO().getCoinPrice() < coinVO.getCoinPriceVO().getCoinPrice()) { // 历史价格小于最新价格，涨
-                            coinVO.setUpDownFlag(1);
+                            coin.setUpDownFlag(1);
                         } else {
-                            coinVO.setUpDownFlag(0);
+                            coin.setUpDownFlag(0);
                         }
-                        BeanUtils.copyProperties(coin, coinVO);
+                        coin.getCoinPriceVO().setCoinPrice(coinVO.getCoinPriceVO().getCoinPrice());
+                        coin.getCoinPriceVO().setSellFirstPrice(coinVO.getCoinPriceVO().getSellFirstPrice());
+                        coin.getCoinPriceVO().setSellFirstCount(coinVO.getCoinPriceVO().getSellFirstCount());
+                        coin.getCoinPriceVO().setBuyFirstPrice(coinVO.getCoinPriceVO().getBuyFirstPrice());
+                        coin.getCoinPriceVO().setBuyFirstCount(coinVO.getCoinPriceVO().getBuyFirstCount());
                     }
                 }
                 if (!hasPlatform) {
@@ -191,6 +187,7 @@ public class VirtualCoinMarketController {
             coinVO.setCoinPriceVO(coinPriceVO);
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
         return coinVO;
     }
