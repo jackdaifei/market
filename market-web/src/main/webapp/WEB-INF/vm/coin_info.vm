@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>赚钱小窗口！！！</title>
+    <title>性能监控！！！</title>
     <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
 </head>
 <style type="text/css">
-    .panel-body {height: 200px;}
+    .panel-body {height: 250px;}
 </style>
 <body>
 <div class="container theme-showcase" role="main">
@@ -19,9 +19,46 @@
             倾家荡产四大捷径：1，追涨杀跌；2，期货杠杆；3，融资融币；4，短线神操作。
             人生巅峰四条大道：1，踏实工作；2，闲钱投资；3、长线持有；4，按时吃饭睡觉。
                                                 ————币界生存法则，非绝世高手不得无视。
-                            （币界十天江湖十年，凶残程度古今罕有，谨记生存法则可保不死）<img src="//img.t.sinajs.cn/t4/appstyle/expression/ext/normal/b6/doge_org.gif" /><img src="//img.t.sinajs.cn/t4/appstyle/expression/ext/normal/b6/doge_org.gif" /></pre>
+                            （币界十天江湖十年，凶残程度古今罕有，谨记生存法则可保不死）<img src="//img.t.sinajs.cn/t4/appstyle/expression/ext/normal/b6/doge_org.gif" /><img src="//img.t.sinajs.cn/t4/appstyle/expression/ext/normal/b6/doge_org.gif" />
+            老板们可以打赏支持哦~！<img src="/resource/1.png" width="30" height="30" /> <img src="/resource/1.png" width="30" height="30" />  <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#myModal">赏~</button>
+        </pre>
+##        <div>
+##            <pre style="display: none;">
+##                <span style="display: inline-block; text-align: center;"><img src="/resource/eth.jpg" width="200" height="200"><br>ETH<br>0xB8cDE1DC76b2C96157Ab0f0a2C718bB38bcf2300</span>
+##                <span style="display: inline-block; text-align: center;"><img src="/resource/weixin.jpg" width="200" height="200"><br><br>微信</span>
+##                <span style="display: inline-block; text-align: center;"><img src="/resource/alipay.jpg" width="200" height="200"><br><br>支付宝</span>
+##            </pre>
+##        </div>
     </div>
     <div class="row"></div>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        ×
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        打赏窗口
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div style="text-align: center; font-size: -webkit-xxx-large;">谢谢老板的打赏...</div>
+                        <div style="text-align: center;">
+                            <span style="display: inline-block;text-align: center;width:49%; font-size: x-large;"><img src="/resource/weixin.jpg" width="200" height="200"><br>微信</span>
+                            <span style="display: inline-block; text-align: center; width:49%; font-size: x-large;"><img src="/resource/alipay.jpg" width="200" height="200"><br>支付宝</span>
+                            <span style="display: inline-block; text-align: center; font-size: x-large;"><img src="/resource/eth.jpg" width="200" height="200"><br>ETH<br>0xB8cDE1DC76b2C96157Ab0f0a2C718bB38bcf2300</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
 
     <div class="row" id="content">
         #*<div class="col-sm-4">
@@ -60,15 +97,80 @@
             </div>
         </div>*#
     </div>
+    <div class="row">
+        <pre></pre>
+    </div>
 </div>
 <script src="/etchain/ETChain_ICO_files/jquery-3.2.1.js"></script>
-<script src="/etchain/ETChain_ICO_files/AntSharesSDK.js"></script>
-<script src="/etchain/ETChain_ICO_files/main.js"></script>
+<script src="/bootstrap/js/bootstrap.js"></script>
 </body>
 <script>
+    $(function(){
+        setInterval(coinInfo, 5000);
+    })
 
-    setInterval(createAccount, 5000);
+    function coinInfo() {
+        $.ajax({
+            url:"/coin/price",
+            type:"post",
+            success:function(data){
+                var html = '';
+                for(var coinName in data) {
+                    html += appendHtml(coinName, data[coinName]);
+                }
+                $('#content').html(html);
+            }
+        });
+    }
 
+    function appendHtml(coinName, array) {
+        var html = [];
+        html.push('<div class="col-sm-6">');
+        html.push('    <div class="panel panel-primary">');
+        html.push('	<div class="panel-heading">');
+        html.push('	    <h3 class="panel-title">'+ coinName + '</h3>');
+        html.push('	</div>');
+        html.push('	<div class="panel-body">');
+        html.push('	    <div class="table-responsive">');
+        html.push('		<table class="table table-striped">');
+        html.push('		    <thead>');
+        html.push('		    <tr>');
+        html.push('			<th>平台</th>');
+        html.push('			<th>价格</th>');
+        html.push('			<th>买一价/数量</th>');
+        html.push('			<th>卖一价/数量</th>');
+        html.push('		    </tr>');
+        html.push('		    </thead>');
+        html.push('		    <tbody>');
+        for(var i=0;i<array.length;i++) {
+            var coinInfo = array[i];
+            html.push('		    <tr>');
+            html.push('			<td>' + coinInfo.platform + '</td>');
+            var upDownFlag = coinInfo.upDownFlag;
+            if (upDownFlag == 1) {
+                html.push('			<td>' + coinInfo.coinPriceVO.coinPrice + '<span class="glyphicon glyphicon-arrow-up" aria-hidden="true" style="color: green;"></span></td>');
+            } else if (upDownFlag == -1) {
+                html.push('			<td>' + coinInfo.coinPriceVO.coinPrice + '<span class="glyphicon glyphicon-arrow-down" aria-hidden="true" style="color: red;"></span></td>');
+            } else {
+                html.push('			<td>' + coinInfo.coinPriceVO.coinPrice + '<span class="glyphicon glyphicon-arrow-right" aria-hidden="true" style="color: black;"></span></td>');
+            }
 
+            if (coinInfo.coinPriceVO != null) {
+                html.push('			<td>' + coinInfo.coinPriceVO.buyFirstPrice + ' / ' + coinInfo.coinPriceVO.buyFirstCount + '</td>');
+                html.push('			<td>' + coinInfo.coinPriceVO.sellFirstPrice + ' / ' + coinInfo.coinPriceVO.sellFirstCount + '</td>');
+            } else {
+                html.push('			<td></td>');
+                html.push('			<td></td>');
+            }
+            html.push('		    </tr>');
+        }
+        html.push('		    </tbody>');
+        html.push('		</table>');
+        html.push('	    </div>');
+        html.push('	</div>');
+        html.push('    </div>');
+        html.push('</div>');
+        return html.join('');
+    }
 </script>
 </html>

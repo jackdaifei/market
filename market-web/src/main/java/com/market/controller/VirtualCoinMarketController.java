@@ -42,22 +42,22 @@ public class VirtualCoinMarketController {
     static {
         coinInfoMapList.put("BTC", new ArrayList<CoinVO>());
         coinInfoMapList.put("ETH", new ArrayList<CoinVO>());
+        coinInfoMapList.put("BTM", new ArrayList<CoinVO>());
+        coinInfoMapList.put("OMG", new ArrayList<CoinVO>());
         coinInfoMapList.put("SNT", new ArrayList<CoinVO>());
+        coinInfoMapList.put("PAY", new ArrayList<CoinVO>());
+        coinInfoMapList.put("ANS", new ArrayList<CoinVO>());
+        coinInfoMapList.put("QTUM", new ArrayList<CoinVO>());
         coinInfoMapList.put("BCC", new ArrayList<CoinVO>());
         coinInfoMapList.put("EOS", new ArrayList<CoinVO>());
-        coinInfoMapList.put("QTUM", new ArrayList<CoinVO>());
+        coinInfoMapList.put("CDT", new ArrayList<CoinVO>());
+        coinInfoMapList.put("ICO", new ArrayList<CoinVO>());
         coinInfoMapList.put("1ST", new ArrayList<CoinVO>());
         coinInfoMapList.put("BTS", new ArrayList<CoinVO>());
         coinInfoMapList.put("ETC", new ArrayList<CoinVO>());
         coinInfoMapList.put("LTC", new ArrayList<CoinVO>());
-        coinInfoMapList.put("ANS", new ArrayList<CoinVO>());
         coinInfoMapList.put("GXS", new ArrayList<CoinVO>());
         coinInfoMapList.put("GNT", new ArrayList<CoinVO>());
-        coinInfoMapList.put("OMG", new ArrayList<CoinVO>());
-        coinInfoMapList.put("PAY", new ArrayList<CoinVO>());
-        coinInfoMapList.put("CDT", new ArrayList<CoinVO>());
-        coinInfoMapList.put("BTM", new ArrayList<CoinVO>());
-        coinInfoMapList.put("ICO", new ArrayList<CoinVO>());
     }
 
     // https://coupon.jd.com/ilink/couponSendFront/send_index.action?key=f74f06c1ccde410e9092fcbe85bf8062&roleId=7479723&to=chongzhi.jd.com/&cpdad=1DLSUE
@@ -71,7 +71,7 @@ public class VirtualCoinMarketController {
     @ResponseBody
     public Map<String, List<CoinVO>> price(String key, String address, HttpServletRequest request) {
 
-        checkAddress(key, address, request);
+//        checkAddress(key, address, request);
 
         return coinInfoMapList;
     }
@@ -125,14 +125,74 @@ public class VirtualCoinMarketController {
     @RequestMapping(value = "/start")
     @ResponseBody
     public JSONObject start() throws Exception {
+        startGetYunBiCoinInfo();
+        startGetBterCoinInfo();
+        startGetB8CoinInfo();
+        startGetB9CoinInfo();
+        startJubiCoinInfo();
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("start", "success");
+        return jsonObject;
+    }
+
+    private void startGetYunBiCoinInfo() {
         Thread thread = new Thread() {
             @Override
             public void run() {
                 while (true) {
                     try {
                         yunBiCoinInfoList();
+                        Thread.sleep(5000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        thread.start();
+    }
+
+    private void startGetBterCoinInfo() {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
                         bterCoinInfoList();
+                        Thread.sleep(5000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        thread.start();
+    }
+
+    private void startGetB8CoinInfo() {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
                         b8CoinInfoList();
+                        Thread.sleep(5000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        thread.start();
+    }
+
+    private void startGetB9CoinInfo() {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
                         b9CoinInfoList();
                         Thread.sleep(5000);
                     } catch (Exception e) {
@@ -141,12 +201,65 @@ public class VirtualCoinMarketController {
                 }
             }
         };
-        thread.start();;
+        thread.start();
+    }
 
+    private void startJubiCoinInfo() {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        jubiInfoList();
+                        Thread.sleep(5000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        thread.start();
+    }
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("start", "success");
-        return jsonObject;
+    private void jubiInfoList() throws Exception {
+        addToCoinInfoMapList("BTC", getJubiCoinInfo("BTC"));
+        addToCoinInfoMapList("ETH", getJubiCoinInfo("ETH"));
+        addToCoinInfoMapList("ANS", getJubiCoinInfo("ANS"));
+        addToCoinInfoMapList("BTS", getJubiCoinInfo("BTS"));
+        addToCoinInfoMapList("LTC", getJubiCoinInfo("LTC"));
+        addToCoinInfoMapList("ETC", getJubiCoinInfo("ETC"));
+        addToCoinInfoMapList("QTUM", getJubiCoinInfo("QTUM"));
+        addToCoinInfoMapList("BTM", getJubiCoinInfo("BTM"));
+        addToCoinInfoMapList("BCC", getJubiCoinInfo("BCC"));
+        addToCoinInfoMapList("EOS", getJubiCoinInfo("EOS"));
+        addToCoinInfoMapList("ICO", getJubiCoinInfo("ICO"));
+    }
+
+    private CoinVO getJubiCoinInfo(String coinName) throws Exception {
+        CoinVO coinVO = new CoinVO();
+        try {
+            String url = "https://www.jubi.com/api/v1/ticker/?coin=" + coinName.toLowerCase();
+            JSONObject juBiJSON = HttpUtils.httpGetWithResponseJSONObject(url, null);
+            coinVO.setCoinName(coinName);
+            coinVO.setPlatform("聚币");
+
+            CoinPriceVO coinPriceVO = new CoinPriceVO();
+            coinPriceVO.setCoinPrice(juBiJSON.getFloat("last"));
+
+            String depthUrl = "https://www.jubi.com/api/v1/depth/?coin=" + coinName.toLowerCase();
+            JSONObject juBiDepthJSON = HttpUtils.httpGetWithResponseJSONObject(depthUrl, null);
+
+            coinPriceVO.setBuyFirstPrice(juBiDepthJSON.getJSONArray("asks").getJSONArray(0).getFloat(0));
+            coinPriceVO.setBuyFirstCount(juBiDepthJSON.getJSONArray("asks").getJSONArray(0).getFloat(1));
+            coinPriceVO.setSellFirstPrice(juBiDepthJSON.getJSONArray("bids").getJSONArray(0).getFloat(0));
+            coinPriceVO.setSellFirstCount(juBiDepthJSON.getJSONArray("bids").getJSONArray(0).getFloat(1));
+
+            coinVO.setCoinPriceVO(coinPriceVO);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return coinVO;
     }
 
     private void b9CoinInfoList() throws Exception {
@@ -180,7 +293,7 @@ public class VirtualCoinMarketController {
             coinPriceVO.setBuyFirstCount(depthJSON.getJSONArray("1").getJSONObject(0).getFloat("num"));
 
             coinPriceVO.setSellFirstPrice(depthJSON.getJSONArray("2").getJSONObject(0).getFloat("price"));
-            coinPriceVO.setSellFirstPrice(depthJSON.getJSONArray("2").getJSONObject(0).getFloat("num"));
+            coinPriceVO.setSellFirstCount(depthJSON.getJSONArray("2").getJSONObject(0).getFloat("num"));
             coinVO.setCoinPriceVO(coinPriceVO);
         } catch (Exception e) {
             e.printStackTrace();
@@ -222,8 +335,9 @@ public class VirtualCoinMarketController {
         coinPriceVO.setBuyFirstPrice(depthJSON.getJSONArray("bids").getJSONArray(0).getFloatValue(0));
         coinPriceVO.setBuyFirstCount(depthJSON.getJSONArray("bids").getJSONArray(0).getFloatValue(1));
 
-        coinPriceVO.setSellFirstPrice(depthJSON.getJSONArray("asks").getJSONArray(0).getFloatValue(0));
-        coinPriceVO.setSellFirstCount(depthJSON.getJSONArray("asks").getJSONArray(0).getFloatValue(1));
+        JSONArray askArray = depthJSON.getJSONArray("asks");
+        coinPriceVO.setSellFirstPrice(askArray.getJSONArray(askArray.size() - 1).getFloatValue(0));
+        coinPriceVO.setSellFirstCount(askArray.getJSONArray(askArray.size() - 1).getFloatValue(1));
 
         coinVO.setCoinPriceVO(coinPriceVO);
         return coinVO;
@@ -283,6 +397,7 @@ public class VirtualCoinMarketController {
         addToCoinInfoMapList("ETC", getBterCoinInfo("ETC", "b11c6ece83a1b2194529fdcc71c18e7d"));
         addToCoinInfoMapList("PAY", getBterCoinInfo("PAY", "a5713697577fdb140e108710a1884f91"));
         addToCoinInfoMapList("ICO", getBterCoinInfo("ICO", "febd61790ac9c775a3a72545af7f95ee"));
+        addToCoinInfoMapList("OMG", getBterCoinInfo("OMG", "3b3dbb3fa0ce4259e3e874198f023434"));
     }
 
     private void addToCoinInfoMapList(String key, CoinVO coinVO) {
