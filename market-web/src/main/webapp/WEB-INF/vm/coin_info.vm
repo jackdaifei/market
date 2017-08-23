@@ -22,13 +22,6 @@
                             （币界十天江湖十年，凶残程度古今罕有，谨记生存法则可保不死）<img src="//img.t.sinajs.cn/t4/appstyle/expression/ext/normal/b6/doge_org.gif" /><img src="//img.t.sinajs.cn/t4/appstyle/expression/ext/normal/b6/doge_org.gif" />
             老板们可以打赏支持哦~！<img src="/resource/1.png" width="30" height="30" /> <img src="/resource/1.png" width="30" height="30" />  <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#myModal">赏~</button>
         </pre>
-##        <div>
-##            <pre style="display: none;">
-##                <span style="display: inline-block; text-align: center;"><img src="/resource/eth.jpg" width="200" height="200"><br>ETH<br>0xB8cDE1DC76b2C96157Ab0f0a2C718bB38bcf2300</span>
-##                <span style="display: inline-block; text-align: center;"><img src="/resource/weixin.jpg" width="200" height="200"><br><br>微信</span>
-##                <span style="display: inline-block; text-align: center;"><img src="/resource/alipay.jpg" width="200" height="200"><br><br>支付宝</span>
-##            </pre>
-##        </div>
     </div>
     <div class="row"></div>
     <!-- 模态框（Modal） -->
@@ -60,53 +53,15 @@
         </div><!-- /.modal -->
     </div>
 
-    <div class="row" id="content">
-        #*<div class="col-sm-4">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title">SNT</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>平台</th>
-                                <th>价格</th>
-                                <th>卖一价/数量</th>
-                                <th>买一价/数量</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>1,001</td>
-                                <td>Lorem</td>
-                                <td>ipsum</td>
-                                <td>dolor</td>
-                            </tr>
-                            <tr>
-                                <td>1,001</td>
-                                <td>Lorem</td>
-                                <td>ipsum</td>
-                                <td>dolor</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>*#
-    </div>
-    <div class="row">
-        <pre></pre>
-    </div>
+    <div class="row" id="content"></div>
 </div>
 <script src="/etchain/ETChain_ICO_files/jquery-3.2.1.js"></script>
 <script src="/bootstrap/js/bootstrap.js"></script>
 </body>
 <script>
     $(function(){
-        setInterval(coinInfo, 5000);
+        coinInfo();
+        setInterval(coinInfo, 10000);
     })
 
     function coinInfo() {
@@ -137,8 +92,12 @@
         html.push('		    <tr>');
         html.push('			<th>平台</th>');
         html.push('			<th>价格</th>');
-        html.push('			<th>买一价/数量</th>');
-        html.push('			<th>卖一价/数量</th>');
+        html.push('			<th>24H最高价</th>');
+        html.push('			<th>24H最低价</th>');
+        html.push('			<th>24H成交量</th>');
+//        html.push('			<th>买一价/数量</th>');
+//        html.push('			<th>卖一价/数量</th>');
+
         html.push('		    </tr>');
         html.push('		    </thead>');
         html.push('		    <tbody>');
@@ -156,8 +115,8 @@
             }
 
             if (coinInfo.coinPriceVO != null) {
-                html.push('			<td>' + coinInfo.coinPriceVO.buyFirstPrice + ' / ' + coinInfo.coinPriceVO.buyFirstCount + '</td>');
-                html.push('			<td>' + coinInfo.coinPriceVO.sellFirstPrice + ' / ' + coinInfo.coinPriceVO.sellFirstCount + '</td>');
+//                html.push('			<td>' + coinInfo.coinPriceVO.buyFirstPrice + ' / ' + coinInfo.coinPriceVO.buyFirstCount + '</td>');
+//                html.push('			<td>' + coinInfo.coinPriceVO.sellFirstPrice + ' / ' + coinInfo.coinPriceVO.sellFirstCount + '</td>');
             } else {
                 html.push('			<td></td>');
                 html.push('			<td></td>');

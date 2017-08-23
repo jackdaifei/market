@@ -15,6 +15,12 @@ public class CoinPriceVO {
 
     private float sellFirstCount;
 
+    private float highPrice24Hour;
+
+    private float lowPrice24Hour;
+
+    private float volume24Hour;
+
     public float getCoinPrice() {
         return coinPrice;
     }
@@ -53,5 +59,29 @@ public class CoinPriceVO {
 
     public void setSellFirstCount(float sellFirstCount) {
         this.sellFirstCount = sellFirstCount;
+    }
+
+    public float getHighPrice24Hour() {
+        return highPrice24Hour;
+    }
+
+    public void setHighPrice24Hour(float highPrice24Hour) {
+        this.highPrice24Hour = highPrice24Hour;
+    }
+
+    public float getLowPrice24Hour() {
+        return lowPrice24Hour;
+    }
+
+    public void setLowPrice24Hour(float lowPrice24Hour) {
+        this.lowPrice24Hour = lowPrice24Hour;
+    }
+
+    public float getVolume24Hour() {
+        return volume24Hour;
+    }
+
+    public void setVolume24Hour(float volume24Hour) {
+        this.volume24Hour = volume24Hour;
     }
 }

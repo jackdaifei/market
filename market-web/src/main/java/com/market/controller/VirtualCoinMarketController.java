@@ -38,6 +38,8 @@ public class VirtualCoinMarketController {
 
     private static final ExecutorService singleThreadExecutor = Executors.newSingleThreadExecutor();
 
+    private static boolean startFlag = false;
+
     private static final Map<String, List<CoinVO>> coinInfoMapList = new LinkedHashMap<String, List<CoinVO>>();
     static {
         coinInfoMapList.put("BTC", new ArrayList<CoinVO>());
@@ -73,7 +75,8 @@ public class VirtualCoinMarketController {
 
 //        checkAddress(key, address, request);
 
-        return coinInfoMapList;
+        return new HashMap<String, List<CoinVO>>();
+//        return coinInfoMapList;
     }
 
     private void checkAddress(final String key, final String address, final HttpServletRequest request) {
@@ -125,11 +128,26 @@ public class VirtualCoinMarketController {
     @RequestMapping(value = "/start")
     @ResponseBody
     public JSONObject start() throws Exception {
-        startGetYunBiCoinInfo();
-        startGetBterCoinInfo();
-        startGetB8CoinInfo();
-        startGetB9CoinInfo();
-        startJubiCoinInfo();
+        if (!startFlag) {
+            startFlag = true;
+            startGetYunBiCoinInfo();
+            startGetBterCoinInfo();
+            startGetB8CoinInfo();
+            startGetB9CoinInfo();
+            startJubiCoinInfo();
+        }
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("start", "success");
+        return jsonObject;
+    }
+
+    @RequestMapping(value = "/stop")
+    @ResponseBody
+    public JSONObject stop() throws Exception {
+        if (startFlag) {
+            startFlag = false;
+        }
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("start", "success");
@@ -140,10 +158,10 @@ public class VirtualCoinMarketController {
         Thread thread = new Thread() {
             @Override
             public void run() {
-                while (true) {
+                while (startFlag) {
                     try {
                         yunBiCoinInfoList();
-                        Thread.sleep(5000);
+                        Thread.sleep(10000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -157,10 +175,10 @@ public class VirtualCoinMarketController {
         Thread thread = new Thread() {
             @Override
             public void run() {
-                while (true) {
+                while (startFlag) {
                     try {
                         bterCoinInfoList();
-                        Thread.sleep(5000);
+                        Thread.sleep(10000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -174,10 +192,10 @@ public class VirtualCoinMarketController {
         Thread thread = new Thread() {
             @Override
             public void run() {
-                while (true) {
+                while (startFlag) {
                     try {
                         b8CoinInfoList();
-                        Thread.sleep(5000);
+                        Thread.sleep(10000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -191,10 +209,10 @@ public class VirtualCoinMarketController {
         Thread thread = new Thread() {
             @Override
             public void run() {
-                while (true) {
+                while (startFlag) {
                     try {
                         b9CoinInfoList();
-                        Thread.sleep(5000);
+                        Thread.sleep(10000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -208,10 +226,10 @@ public class VirtualCoinMarketController {
         Thread thread = new Thread() {
             @Override
             public void run() {
-                while (true) {
+                while (startFlag) {
                     try {
                         jubiInfoList();
-                        Thread.sleep(5000);
+                        Thread.sleep(10000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

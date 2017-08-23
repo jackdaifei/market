@@ -28,9 +28,9 @@ public class EtchainController {
     }
 
     private void guessAddress(String key, String address, String url, String fileName, boolean isJsonResult, HttpServletRequest request) {
+        boolean bingo = false;
+        String r = "";
         try {
-            boolean bingo = false;
-            String r = "";
             if (isJsonResult) {
                 JSONObject jsonObject = HttpUtils.httpGetWithResponseJSONObject(url, null);
                 if ("0000".equals(jsonObject.getString("retCode"))) {
@@ -55,6 +55,16 @@ public class EtchainController {
 
         } catch (Exception e) {
             e.printStackTrace();
+            try {
+                String sysPath = request.getSession().getServletContext().getRealPath("/");
+                File file = new File(sysPath + "/error.txt");
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+                writer.write("key:" + key + "\taddress:" + address + "\t" + r);
+                writer.newLine();
+                writer.close();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
         }
     }
 }
