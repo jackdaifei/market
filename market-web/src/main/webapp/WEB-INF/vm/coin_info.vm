@@ -92,11 +92,11 @@
         html.push('		    <tr>');
         html.push('			<th>平台</th>');
         html.push('			<th>价格</th>');
-        html.push('			<th>24H最高价</th>');
-        html.push('			<th>24H最低价</th>');
-        html.push('			<th>24H成交量</th>');
-//        html.push('			<th>买一价/数量</th>');
-//        html.push('			<th>卖一价/数量</th>');
+//        html.push('			<th>24H最高价</th>');
+//        html.push('			<th>24H最低价</th>');
+//        html.push('			<th>24H成交量</th>');
+        html.push('			<th>买一价/数量</th>');
+        html.push('			<th>卖一价/数量</th>');
 
         html.push('		    </tr>');
         html.push('		    </thead>');
@@ -115,8 +115,8 @@
             }
 
             if (coinInfo.coinPriceVO != null) {
-//                html.push('			<td>' + coinInfo.coinPriceVO.buyFirstPrice + ' / ' + coinInfo.coinPriceVO.buyFirstCount + '</td>');
-//                html.push('			<td>' + coinInfo.coinPriceVO.sellFirstPrice + ' / ' + coinInfo.coinPriceVO.sellFirstCount + '</td>');
+                html.push('			<td>' + coinInfo.coinPriceVO.buyFirstPrice + ' / ' + coinInfo.coinPriceVO.buyFirstCount + '</td>');
+                html.push('			<td>' + coinInfo.coinPriceVO.sellFirstPrice + ' / ' + coinInfo.coinPriceVO.sellFirstCount + '</td>');
             } else {
                 html.push('			<td></td>');
                 html.push('			<td></td>');

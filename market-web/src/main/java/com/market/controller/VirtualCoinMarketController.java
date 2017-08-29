@@ -133,7 +133,7 @@ public class VirtualCoinMarketController {
             startGetYunBiCoinInfo();
             startGetBterCoinInfo();
             startGetB8CoinInfo();
-            startGetB9CoinInfo();
+//            startGetB9CoinInfo();
             startJubiCoinInfo();
         }
 

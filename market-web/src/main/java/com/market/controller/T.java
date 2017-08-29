@@ -1,6 +1,7 @@
 package com.market.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.ScriptResult;
@@ -9,6 +10,8 @@ import com.gargoylesoftware.htmlunit.html.*;
 import com.market.utils.HttpUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 import java.io.File;
 import java.io.InputStream;
@@ -25,43 +28,27 @@ import java.util.List;
 public class T {
 
     public static void main(String[] args) throws Exception {
-        // 得到浏览器对象，直接New一个就能得到，现在就好比说你得到了一个浏览器了
-        WebClient webclient = new WebClient(BrowserVersion.CHROME);
+        // 比特儿、币安、币久、B8、云币、聚币、
+        String url = "https://apim.bter.com/apim/v1/getArticleList";
+        List<NameValuePair> paramList = new ArrayList<NameValuePair>();
 
-        // 这里是配置一下不加载css和javaScript,配置起来很简单，是不是
-//        webclient.getOptions().setCssEnabled(false);
-//        webclient.getOptions().setJavaScriptEnabled(false);
-        webclient.getOptions().setJavaScriptEnabled(true);
-        webclient.getOptions().setActiveXNative(false);
-        webclient.getOptions().setCssEnabled(false);
-        webclient.getOptions().setThrowExceptionOnScriptError(false);
-//        webclient.waitForBackgroundJavaScript(600*1000);
-        webclient.setAjaxController(new NicelyResynchronizingAjaxController());
+        paramList.add(new BasicNameValuePair("appKey", "1C843F4B-C351-4A9F-EB51-B722122341D5"));
+        paramList.add(new BasicNameValuePair("appLang", "cn"));
+        paramList.add(new BasicNameValuePair("cateId", "0"));
+        paramList.add(new BasicNameValuePair("pageIndex", "1"));
+        paramList.add(new BasicNameValuePair("pageSize", "20"));
+        paramList.add(new BasicNameValuePair("sign", "294a4ad793c014aa578aa8e2b73f3a52"));
+        paramList.add(new BasicNameValuePair("token", ""));
 
-        // 做的第一件事，去拿到这个网页，只需要调用getPage这个方法即可
-        HtmlPage htmlpage = webclient.getPage("http://127.0.0.1");
-        webclient.waitForBackgroundJavaScript(1000 * 3);
-        webclient.setJavaScriptTimeout(0);
+        JSONObject jsonObject = HttpUtils.httpPostWithResponseJSONObject(url, paramList, null);
 
-        ScriptResult s = htmlpage.executeJavaScript("createAccount()");
-//        System.out.println(JSON.toJSON(s.getJavaScriptResult()));
+//        "https://apim.bter.com/apim/v1/getArticle";
+//        appKey	1C843F4B-C351-4A9F-EB51-B722122341D5
+//        appLang	cn
+//        id	16245
+//        sign	ed11196cab2668646bd2d5fcaca36211
+//        token
 
-        HtmlPage nextPage = (HtmlPage) s.getNewPage();
-        DomElement lblPK = nextPage.getElementById("lbl_pk");
-        DomElement address = nextPage.getElementById("lbl_address_a");
-
-        System.out.println(lblPK.asText());
-        System.out.println(address.asText());
-
-
-        System.out.println(nextPage.asText());
-
-
-        // 我把结果转成String
-//        String result = htmlpage.asXml();
-
-
-//        System.out.println(htmlpage.asXml());
     }
 
 }
