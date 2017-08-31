@@ -11,6 +11,8 @@
     <modules>
         <module>market-web</module>
         <module>market-utils</module>
+        <module>market-service</module>
+        <module>market-pojo</module>
     </modules>
 <dependencyManagement>
     <dependencies>
